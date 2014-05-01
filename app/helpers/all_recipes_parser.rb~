@@ -1,0 +1,64 @@
+require 'nokogiri'
+require 'open-uri'
+require 'timeout'
+require 'restclient'
+require 'hangry'
+
+module AllRecipesParser
+
+	def self.parse_image_url(page_url)
+		f= RestClient.get(page_url)
+		doc = Nokogiri::HTML(f)
+		return doc.css("div[id = divHeroPhotoContainer]").css("img[id=imgPhoto]")[0]["src"]
+	end
+
+	def self.parse_menu_page(url)
+		f= RestClient.get(url)
+		doc = Nokogiri::HTML(f)
+		grids = doc.css("div[id = divGridItemWrapper]")
+		url_list = []
+		grids.each do |link|
+			page_url = link.css("a[class = img-link]")[0]["href"]
+			url_list.push(page_url)
+		end
+		return url_list
+
+
+	end
+
+
+	def self.create_recipe(url)
+		begin
+			page_as_string = open(url).read
+			recipe = Hangry.parse(page_as_string)
+			image_url = parse_image_url(url)
+			Recipe.create(name: recipe.name, author: recipe.author, ingredients: recipe.ingredients, instructions: recipe.instructions, servings: recipe.yield, prep_time: recipe.prep_time, cook_time: recipe.cook_time, total_time: recipe.total_time, img_url: image_url)
+			puts "Recipe created!"
+			puts recipe.name
+		rescue OpenURI::HTTPError => ex
+			puts 'Page not found!'
+		end
+
+	end
+
+	def self.parse_all_recipes
+		num_of_page = 100
+		(1..100).each do |num|
+			url = 'http://allrecipes.com/recipes/main.aspx?Page=' + num.to_s + '#recipes'
+			url_list = parse_menu_page(url)
+			url_list.each do |recipe_url|
+				recipe_url = 'http://allrecipes.com' + recipe_url
+				create_recipe(recipe_url)
+			end
+	
+		end
+
+	end
+
+
+
+
+
+
+
+end

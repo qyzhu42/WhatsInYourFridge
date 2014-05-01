@@ -1,0 +1,23 @@
+	<%= form_tag("/recipe/search", method: "get") do %>
+		<h1 id = "title">What's in your fridge?</h1>
+
+		<p><%= text_area_tag(:ingredients, params[:ingredients], size: "50x5") %>
+		<%= submit_tag("Search") %>
+		<div>
+			<div class = "Input">
+				<div class "form-inline">
+					Sort by: 
+					<%= radio_button_tag(:method, '0', :checked => (params[:method] == nil || params[:method] == '0')) %>
+					Relevance
+					<%= radio_button_tag(:method, '1') %>
+					Shortest time
+					<%= radio_button_tag(:method, '2') %>
+					Longest time
+					<br>Show recipes with
+					<%= text_field_tag(:low, 0) %>
+					to
+					<%= text_field_tag(:high, 10) %> servings
+				</div>
+			</div>
+		</div>
+	<% end %>

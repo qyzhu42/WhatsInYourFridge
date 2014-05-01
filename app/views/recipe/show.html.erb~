@@ -1,0 +1,20 @@
+<p>
+  <strong>name:</strong>
+  <%= @recipe.name %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @recipe.author %>
+</p>
+
+<p>
+  <strong>ingredients:</strong>
+  <%= @recipe.ingredients %>
+</p>
+
+<p>
+  <strong>instruction:</strong>
+  <%= @recipe.instruction %>
+</p>
+

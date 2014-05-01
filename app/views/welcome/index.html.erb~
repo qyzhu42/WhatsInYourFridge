@@ -1,0 +1,11 @@
+<div class="center hero-unit">
+	<h1>What's in your fridge?</h1>
+	<%= form_tag("/recipe/search", method: "get") do %>
+		<p><%= text_field_tag(:ingredient1, params[:ingredient1]) %></p>
+		<%= text_field_tag(:ingredient2, params[:ingredient2]) %>
+		<%= text_field_tag(:ingredient3, params[:ingredient3]) %>
+		<%= text_field_tag(:ingredient4, params[:ingredient4]) %>
+		<%= submit_tag("Search") %>
+	<% end %>
+	
+</div>

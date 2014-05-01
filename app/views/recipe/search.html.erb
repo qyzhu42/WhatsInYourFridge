@@ -1,0 +1,61 @@
+	<%= render 'recipe/search_box' %>
+
+	
+
+
+<div class="SearchResultContainer">
+	<% if (@results.empty?) %>
+		<h3> No matches found. </h3> 
+	<% end %>
+
+
+	<%= will_paginate @results , :renderer => BootstrapPagination::Rails %>
+
+	<% @results.each do | result | %>
+		<% recipe = result.first %>
+		<div class="SearchResult row">
+			<div class="col-sm-12 col-lg-6 img">
+				<img src="<%= recipe.img_url%>"> </img>
+
+			</div>
+
+			<div class = "span4 display">
+				<div class = "row">
+
+					<div class = "col-sm-12 col-lg-6 name">
+						<h4><a href="<%= recipe.id %>"><%= recipe.name%></a></h4>
+						<% if result.second == 0
+							str = "You can makd this dish!"
+						else
+							str = result.second.to_s + " extra ingredients needed"
+						end 
+
+						%>
+						
+						<h4><span class="label label-default"><%= str %></span></h4>
+						<h4><span class="label label-default">Total time: <%= StringHelper.duration_to_string(result.first.total_time) %></span>
+						</h4>
+						<h4><span class="label label-default">Servings: <%= result.first.servings %></span>
+						</h4>
+
+					</div>
+
+
+
+	
+
+				</div>
+
+
+			</div>
+		</div>
+
+			<hr>	
+	<% end %>
+
+	<%= will_paginate @results , :renderer => BootstrapPagination::Rails %>
+
+		
+
+</div>
+

@@ -1,0 +1,43 @@
+	<%= form_tag("/recipe/search", method: "get") do %>
+		<p><%= text_field_tag(:ingredient1, params[:ingredient1]) %></p>
+		<p><%= text_field_tag(:ingredient2, params[:ingredient2]) %></p>
+		<p><%= text_field_tag(:ingredient3, params[:ingredient3]) %></p>
+		<p><%= text_field_tag(:ingredient4, params[:ingredient4]) %></p>
+		<%= submit_tag("Search") %>
+	<% end %>
+	
+
+
+<div class="SearchResultContainer">
+	<% if (@results.empty?) %>
+		<h3> No matches found. </h3> 
+	<% end %>
+
+	<%= will_paginate @results %>
+
+	<% @results.each do | result | %>
+		<% recipe = result.first %>
+		<div class="SearchResult row">
+			<div class="span1 img">
+				<img src="<%= recipe.img_url%>"> </img>
+			</div>
+
+			<div class = "span8 display">
+				<div class = "row">
+					<div class = "span7 name">
+						<h4><a href="<%= recipe.id %>"><%= recipe.name%></a> 
+						<%= result.second%> extra ingredients needed
+					</div>
+	
+				</div>
+
+
+			</div>
+		</div>
+
+			<hr>	
+	<% end %>
+		
+	<%= will_paginate @results %>
+</div>
+

@@ -1,0 +1,59 @@
+<div class = "container-fluid">
+    <div class = "container-fluid" id="top-cont">
+        <h1 class = "header offset2"><%=@recipe.name %> </h1>
+        <div class = "row">
+            <table class = "table-bordered offset2"><tr>    
+        	<td class="well span3">
+                <div id="top">
+        		  <img style = "height:auto; width:auto; max-width:300px; max-height:300px" src='<%= @recipe.img_url %>' class = "img-rounded"> <br />
+                </div>
+            </td>
+            <td class="span2 well">
+        	<div id ="info">
+        		<!--:ingredients,  -->
+        	
+        		<p>Prep time: <%= StringHelper.duration_to_string(@recipe.prep_time) %></p>
+        		<p>Cook time: <%= StringHelper.duration_to_string(@recipe.cook_time) %></p>
+        		<p>Total time: <%= StringHelper.duration_to_string(@recipe.total_time) %></p>
+        		<p>Author: <%= @recipe.author %></p>
+        		<p>Servings: <%= @recipe.servings %></p>
+        		<p><a href="<%=@recipe.url%>">>
+    				Source : <%= @recipe.source %>
+    			</a></p>
+
+        	</div>
+            </td>
+            <td class="span3 well">
+        	<div id = "ingredients">    
+                    <div class="table container">
+                    <p> Ingredients: </p> <br />
+
+                    <% @recipe.ingredients.each do |ingredient| %>
+                    
+        				    <%= ingredient %>
+                 
+        				</p>
+                        <br />
+                    <% end %>
+                    </div>
+        	</div>
+        	</td></tr></table>
+        </div>
+        <div class="row">
+            <table><tr><td>
+            <div class = "well span8 offset2">
+        	  <p><%= @recipe.instructions %></p> 
+            </div>
+            </td>
+        </div>
+            
+        
+
+            
+        </div>
+    </div>
+
+ 
+
+</div>
+

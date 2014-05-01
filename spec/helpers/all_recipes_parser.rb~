@@ -1,0 +1,41 @@
+require 'spec_helper'
+
+
+describe AllRecipesParser do
+
+	describe "image url parser" do
+
+
+		it "should return correct image url for recipe pages" do
+			url1 = "http://allrecipes.com/Recipe/Jays-Signature-Pizza-Crust/Detail.aspx?evt19=1"
+			url2 = "http://allrecipes.com/Recipe/Peanut-Butter-Cup-Cookies/Detail.aspx?evt19=1"
+			correct_image1 = "http://images.media-allrecipes.com/userphotos/250x250/00/23/78/237891.jpg"
+			correct_image2 = "http://images.media-allrecipes.com/userphotos/250x250/00/27/11/271187.jpg"
+			image_url1 = AllRecipesParser.parse_image_url(url1)
+			image_url2 = AllRecipesParser.parse_image_url(url2)
+			expect(image_url1).to eq(correct_image1)
+			expect(image_url2).to eq(correct_image2)
+
+		end
+	end
+
+	describe "parse menu page" do
+		it "should return 150 urls" do
+			url = "http://www.foodnetwork.com/recipes/a-z.W.1.html"
+			result = AllRecipesParser.parse_menu_page(url)
+			expect(result.size).to eq(150)
+		end
+
+		it "should return correct urls" do
+			url = "http://www.foodnetwork.com/recipes/a-z.W.1.html"
+			result = AllRecipesParser.parse_menu_page(url)
+			waffle_chips = "/recipes/waffle-chips-recipe.html"
+			waffle_king = "/recipes/waffle-king-recipe.html"
+			warm_brown_rice_salad = "/recipes/warm-brown-rice-salad-recipe.html"
+			expect(result).to include(waffle_chips)
+			expect(result).to include(waffle_king)
+			expect(result).to include(warm_brown_rice_salad)
+		end
+	end
+
+end
